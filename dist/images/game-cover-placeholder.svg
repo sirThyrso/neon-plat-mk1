@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="480" viewBox="0 0 720 480" fill="none">
+  <!-- Arte abstrata original e temporária; não representa a capa oficial de um jogo. -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" stroke="#ffffff" stroke-opacity=".08"/></pattern>
+  </defs>
+  <path fill="url(#grid)" d="M0 0h720v480H0z"/>
+  <path d="m360 45 135 78v156l-135 78-135-78V123Z" stroke="#f42fa7" stroke-opacity=".5" stroke-width="2"/>
+  <path d="m360 76 108 63v124l-108 63-108-63V139Z" stroke="#baff32" stroke-opacity=".3"/>
+  <path d="m305 190 36 36 75-75" stroke="#baff32" stroke-width="6"/>
+  <path d="M28 70V28h90M602 28h90v42M28 410v42h90M602 452h90v-42" stroke="#ffffff" stroke-opacity=".25" stroke-width="2"/>
+</svg>
