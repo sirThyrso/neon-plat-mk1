@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Trophy, X } from 'lucide-react';
+import { ArrowUpRight, Search, Trophy, X } from 'lucide-react';
 import { games } from '../data/games.js';
 import { GENERAL_CONTACT_MESSAGE, getWhatsAppUrl } from '../config/whatsapp.js';
 import { filterGames, formatPrice, getGameMessage } from '../lib/catalog.js';
@@ -84,19 +84,24 @@ export default function Catalog() {
   return <section className="section catalog" id="jogos">
     <div className="section-top"><span className="kicker">// 02 — GAME DATABASE</span><span className="side-note">CATÁLOGO OFICIAL</span></div>
     <div className="catalog-head"><h2>ESCOLHA SEU<br/><em>PRÓXIMO ALVO.</em></h2><p>Escolha seu jogo e a versão desejada. Os preços são individuais para a platina completa, começando do zero. Já tem progresso? Solicite um orçamento personalizado.</p></div>
-    <label className="search"><span aria-hidden="true">⌕</span><input type="search" placeholder="BUSCAR JOGO..." value={search} onChange={event => setSearch(event.target.value)} aria-label="Buscar jogo pelo nome"/><span aria-hidden="true">SEARCH_</span></label>
-    <div className="catalog-filters">
-      <fieldset className="platform-filters"><legend>PLATAFORMA</legend><div>{[['', 'Todos'], ['PS4', 'PS4'], ['PS5', 'PS5']].map(([value, label]) => <button type="button" key={value} aria-pressed={platform === value} onClick={() => setPlatform(value)}>{label}</button>)}</div></fieldset>
-      <label className="genre-filter" htmlFor="catalog-genre">GÊNERO<select id="catalog-genre" value={genre} onChange={event => setGenre(event.target.value)}><option value="">Todos os gêneros</option>{genres.map(value => <option key={value} value={value}>{value}</option>)}</select></label>
-      {hasFilters && <button className="catalog-reset" type="button" onClick={clearFilters}>LIMPAR FILTROS</button>}
+    <div className="catalog-tools">
+      <label className="search">
+        <Search size={18} aria-hidden="true"/>
+        <input type="search" placeholder="Buscar por nome" value={search} onChange={event => setSearch(event.target.value)} aria-label="Buscar jogo pelo nome"/>
+      </label>
+      <div className="catalog-filters">
+        <fieldset className="platform-filters"><legend>PLATAFORMA</legend><div>{[['', 'Todos'], ['PS4', 'PS4'], ['PS5', 'PS5']].map(([value, label]) => <button type="button" key={value} aria-pressed={platform === value} onClick={() => setPlatform(value)}>{label}</button>)}</div></fieldset>
+        <label className="genre-filter" htmlFor="catalog-genre">GÊNERO<select id="catalog-genre" value={genre} onChange={event => setGenre(event.target.value)}><option value="">Todos os gêneros</option>{genres.map(value => <option key={value} value={value}>{value}</option>)}</select></label>
+        {hasFilters && <button className="catalog-reset" type="button" onClick={clearFilters}>LIMPAR FILTROS</button>}
+      </div>
+      <p className="catalog-results" role="status"><strong>{filtered.length}</strong> {filtered.length === 1 ? 'jogo encontrado' : 'jogos encontrados'} · {games.length} no catálogo</p>
     </div>
-    <p className="catalog-results" role="status">{filtered.length} {filtered.length === 1 ? 'jogo encontrado' : 'jogos encontrados'} · {games.length} no catálogo</p>
     {whatsappPending && <p className="whatsapp-notice" id="catalog-whatsapp-status">Integração com WhatsApp pendente. Você pode consultar os jogos e preços; a contratação será liberada quando o contato for configurado.</p>}
     <div className="game-grid">
       {filtered.map(game => <article className={`game-card ${game.tone}`} key={game.id} id={game.slug}>
         <GameCover game={game}/>
         <div className="game-info">
-          <h3><button type="button" className="game-card-trigger" aria-haspopup="dialog" aria-label={`Abrir detalhes de ${game.name}`} aria-describedby={`${game.id}-platforms ${game.id}-price`} onClick={() => setSelectedGame(game)}>{game.name}</button></h3>
+          <h3><button type="button" className="game-card-trigger" aria-haspopup="dialog" aria-label={`Abrir detalhes de ${game.name}`} aria-describedby={`${game.id}-platforms ${game.id}-price`} onClick={() => setSelectedGame(game)}><span>{game.name}</span><ArrowUpRight size={16} aria-hidden="true"/></button></h3>
           <p className="game-platforms" id={`${game.id}-platforms`}>{game.platforms.join(' / ')}</p>
           <div className="game-price" id={`${game.id}-price`}><span className="game-price-prefix">A partir de</span>{formatPrice(game.price)}</div>
         </div>
